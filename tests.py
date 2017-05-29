@@ -23,7 +23,6 @@ def runTests():
 def setup():
 	for i in range(0, nfeatures):
 		wordset[features[i]] = i
-
 def testSanitize():
 	my_input = sanitize.sanitize(test_input, nfeatures, wordset)
 	my_output = model.predict(my_input)

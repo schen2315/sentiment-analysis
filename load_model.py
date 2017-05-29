@@ -7,19 +7,17 @@ sample_tweet = ["Nah but if he 27 I can&#39;t believe he isn&#39;t saying Kobe i
 features = []
 wordset = {}
 
-def predict(tweets, model_file, features_file):
-	model = joblib.load(model_file)
+model = joblib.load("twitter_sentiment.pkl")
+with open("feature_names.json", "r") as infile:
+	features = json.load(infile)
+nfeatures = len(features)
+for i in range(0, nfeatures):
+	wordset[features[i]] = i
 
-	with open(features_file, "r") as infile:
-		features = json.load(infile)
-
-	nfeatures = len(features)
-	for i in range(0, nfeatures):
-		wordset[features[i]] = i
-
+def predict(tweets, model, wordset):
 	sample_observ = sanitize.sanitize(tweets, nfeatures, wordset)
 	prediction = model.predict(sample_observ)
 	return prediction
 
-prediction = predict(sample_tweet, "twitter_sentiment.pkl", "feature_names.json")
+prediction = predict(sample_tweet, model, wordset)
 print(prediction)
