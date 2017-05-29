@@ -1,4 +1,5 @@
-from bs4 import BeautifulSoup  
+from bs4 import BeautifulSoup
+import numpy as np  
 import re
 import json
 
@@ -28,12 +29,12 @@ def tweets2wordset(tweets, wordset):
 
 def tweet2features(tweet, nfeatures, wordset):
 	observation = [0]*nfeatures
-	print("number of features", len(observation))
+	#print("number of features", len(observation))
 	split = tweet.split(' ')
 	for i in range(0, len(split)):
 		if split[i] in wordset:
 			observation[wordset[split[i]]] += 1
-	return observation
+	return np.asarray(observation).reshape(1, -1)
 
 def sentiment2class(x):
 	if(x == 4):

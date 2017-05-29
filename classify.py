@@ -75,7 +75,11 @@ print(sample_observ)
 train_data_features = preprocessing.normalize(train_data_features, axis=0)
 
 
-# applying PCA 
+# applying PCA  
+# there is a mistake here
+# PCA should only be applied to the training data & not both the training & test data
+# According to Andrew Ng, bad to use PCA to prevent overfitting
+# try regularization instead?
 pca = PCA()
 print(pca.fit(train_data_features))
 # print(pca.explained_variance_ratio_) 
@@ -111,7 +115,7 @@ lr = LR(multi_class='ovr')
 
 classes = [1, 0, -1];
 
-
+'''
 for i in classes:
 	trainovax = x_train
 	testovax = x_test
@@ -119,7 +123,7 @@ for i in classes:
 	testovay = np.asarray(list(map(sanitize.convertova, y_test, [i]*len(y_test))))
 	auc = train_and_eval_auc(lr, trainovax, trainovay, testovax, testovay)
 	print("logistic regression AUC of class %s: " % sanitize.num2class_name(i), auc)
-
+'''
 
 # persist the model
 lr.fit(x_train, y_train)
