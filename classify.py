@@ -84,7 +84,7 @@ train_data_features = preprocessing.normalize(train_data_features, axis=0)
 # there is a mistake here
 # PCA should only be applied to the training data & not both the training & test data
 # According to Andrew Ng, bad to use PCA to prevent overfitting
-# try regularization instead?
+# try regularization instead? -> already in use
 pca = PCA()
 print(pca.fit(train_data_features))
 # print(pca.explained_variance_ratio_) 
@@ -130,7 +130,7 @@ for i in classes:
 	print("logistic regression AUC of class %s: " % sanitize.num2class_name(i), auc)
 '''
 
-# persist the model
+# persist the model & feature set
 lr.fit(x_train, y_train)
 joblib.dump(lr, 'twitter_sentiment.pkl')
 
@@ -138,12 +138,13 @@ feature_names = vectorizer.get_feature_names()
 with open("feature_names.json", "w") as outfile:
 	json.dump(feature_names, outfile)
 
+'''
 test_input = train['tweet']
 test_input_sanitized = train_data_features
 print(len(test_input))
 print(len(test_input_sanitized))
 np.savetxt("test_input.csv", test_input, delimiter="\n", fmt='%s')
 np.savetxt("test_input_sanitized.csv", test_input_sanitized, delimiter=",", fmt='%d')
-
+'''
 
 

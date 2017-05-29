@@ -12,14 +12,18 @@ model = joblib.load('twitter_sentiment.pkl')
 
 with open("feature_names.json", "r") as infile:
 	features = json.load(infile)
+
 nfeatures = len(features)
 wordset = {}
-def setup():
-	for i in range(0, nfeatures):
-		wordset[features[i]] = i
+
 def runTests():
 	setup()
 	testSanitize()
+
+def setup():
+	for i in range(0, nfeatures):
+		wordset[features[i]] = i
+
 def testSanitize():
 	my_input = sanitize.sanitize(test_input, nfeatures, wordset)
 	my_output = model.predict(my_input)
