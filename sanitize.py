@@ -26,16 +26,21 @@ def tweets2wordset(tweets, wordset):
 				index = index + 1
 	return wordset, index
 
-
+def sanitize(tweets, nfeatures, wordset):
+	my_input = []
+	for i in range(0, len(tweets)):
+		my_input.append(tweet2features(tweet_to_words(tweets[i]), nfeatures, wordset))
+	return my_input
 def tweet2features(tweet, nfeatures, wordset):
-	observation = [0]*nfeatures
+	# observation = [0]*nfeatures
+	observation = np.zeros(nfeatures)
 	#print("number of features", len(observation))
 	split = tweet.split(' ')
 	for i in range(0, len(split)):
 		if split[i] in wordset:
 			observation[wordset[split[i]]] += 1
-	return np.asarray(observation).reshape(1, -1)
-
+	# return np.asarray(observation).reshape(1, -1)
+	return observation
 def sentiment2class(x):
 	if(x == 4):
 		return 1

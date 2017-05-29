@@ -63,12 +63,17 @@ print("number of features", nfeatures)
 
 
 # sample_tweet = "&#39;@TyDButler How is Kobe being completely ignored in the Lebron vs MJ discussion.&#39;"
-sample_tweet = "Nah but if he 27 I can&#39;t believe he isn&#39;t saying Kobe instead. https://t.co/Ki3sqiRuiC&quot;"
+# sample_tweet = "Nah but if he 27 I can&#39;t believe he isn&#39;t saying Kobe instead. https://t.co/Ki3sqiRuiC&quot;"
+sample_tweet = train["tweet"][0]
 cleaned_sample = sanitize.tweet_to_words(sample_tweet)
 
 sample_observ = sanitize.tweet2features(cleaned_sample, nfeatures, wordset)
-print(sample_observ)
-
+# print(sample_observ[0] == train_data_features[0])
+# print(sample_observ)
+# print(train_data_features[0])
+for i in range(0, len(sample_observ)):
+	if(sample_observ[i] != train_data_features[0][i]):
+		print("False")
 
 '''
 # normalizing makes (+) & (-) but (0) worse
@@ -133,6 +138,12 @@ feature_names = vectorizer.get_feature_names()
 with open("feature_names.json", "w") as outfile:
 	json.dump(feature_names, outfile)
 
+test_input = train['tweet']
+test_input_sanitized = train_data_features
+print(len(test_input))
+print(len(test_input_sanitized))
+np.savetxt("test_input.csv", test_input, delimiter="\n", fmt='%s')
+np.savetxt("test_input_sanitized.csv", test_input_sanitized, delimiter=",", fmt='%d')
 
 
 
